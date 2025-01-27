@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using System.Diagnostics;
 using Vanara.Extensions;
 using Vanara.PInvoke;
 using Windows.Storage.Provider;
@@ -178,6 +179,25 @@ public partial class SyncProvider : IDisposable
         SyncRootInfo.StorageProviderItemPropertyDefinitions.Add(new StorageProviderItemPropertyDefinition() { DisplayNameResource = "Beschreibung", Id = 0 });
 
         StorageProviderSyncRootManager.Register(SyncRootInfo);
+
+        // print the registered sync root
+        Debug.WriteLine("Sync Root Information:");
+        Debug.WriteLine($"Id: {GetSyncRootID()}");
+        Debug.WriteLine($"AllowPinning: {true}");
+        Debug.WriteLine($"DisplayNameResource: {SyncContext.SyncProviderParameter.ProviderInfo.ProviderName}");
+        Debug.WriteLine($"HardlinkPolicy: {StorageProviderHardlinkPolicy.None}");
+        Debug.WriteLine($"HydrationPolicy: {StorageProviderHydrationPolicy.Partial}");
+        Debug.WriteLine($"HydrationPolicyModifier: {StorageProviderHydrationPolicyModifier.AutoDehydrationAllowed | StorageProviderHydrationPolicyModifier.StreamingAllowed}");
+        Debug.WriteLine($"InSyncPolicy: {StorageProviderInSyncPolicy.FileLastWriteTime}");
+        Debug.WriteLine($"Path: {path}");
+        Debug.WriteLine($"PopulationPolicy: {StorageProviderPopulationPolicy.Full}");
+        Debug.WriteLine($"ProtectionMode: {StorageProviderProtectionMode.Unknown}");
+        Debug.WriteLine($"ProviderId: {SyncContext.SyncProviderParameter.ProviderInfo.ProviderId}");
+        Debug.WriteLine($"Version: {SyncContext.SyncProviderParameter.ProviderInfo.ProviderVersion}");
+        Debug.WriteLine($"IconResource: {@"C:\WINDOWS\system32\imageres.dll,-1043"}");
+        Debug.WriteLine($"ShowSiblingsAsGroup: {false}");
+        Debug.WriteLine($"RecycleBinUri: {null}");
+        Debug.WriteLine($"Context: {Windows.Security.Cryptography.CryptographicBuffer.ConvertStringToBinary(GetSyncRootID(), Windows.Security.Cryptography.BinaryStringEncoding.Utf8)}");
 
         await Task.Delay(1000);
 
